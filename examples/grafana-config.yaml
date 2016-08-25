@@ -1,0 +1,52 @@
+apiVersion: v1
+data:
+  grafana.ini: |+
+    #################################### Security ####################################
+    [security]
+    # default admin user, created on startup
+    admin_user = admin
+    admin_password = OmeQueToh1
+    secret_key = etenes9aet4eTez7Ee7u
+
+    #################################### Server ####################################
+    [server]
+    protocol = http
+    http_port = 3000
+    domain = grafana.miveo.net
+    # Redirect to correct domain if host header does not match domain
+    # Prevents DNS rebinding attacks
+    enforce_domain = false
+    root_url = https://grafana.example.com/
+
+    # Log web requests
+    router_logging = false
+
+    # the path relative working path
+    static_root_path = public
+
+    #################################### Users ####################################
+    [users]
+    # disable user signup / registration
+    allow_sign_up = false
+
+    #################################### Google Auth ##########################
+    [auth.google]
+    enabled = true
+    allow_sign_up = true
+    allowed_domains = example.com
+    client_id = client_id.apps.googleusercontent.com
+    client_secret = clientsecret
+    ;scopes = https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email
+    ;auth_url = https://accounts.google.com/o/oauth2/auth
+    ;token_url = https://accounts.google.com/o/oauth2/token
+    ;api_url = https://www.googleapis.com/oauth2/v1/userinfo
+
+kind: ConfigMap
+metadata:
+  creationTimestamp: 2016-08-18T15:49:07Z
+  name: grafana-config
+  namespace: default
+  resourceVersion: "4054560"
+  selfLink: /api/v1/namespaces/default/configmaps/grafana-config
+  uid: 4be5f493-655b-11e6-84ae-42010af00075
+

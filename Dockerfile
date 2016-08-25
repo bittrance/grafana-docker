@@ -1,6 +1,6 @@
 FROM debian:jessie
 
-ENV GRAFANA_VERSION 2.5.0
+ENV GRAFANA_VERSION 3.1.1-1470047149
 
 RUN apt-get update && \
     apt-get -y --no-install-recommends install libfontconfig curl ca-certificates && \
@@ -11,15 +11,14 @@ RUN apt-get update && \
     apt-get remove -y curl && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/* && \
-    mkdir -p /opt/grafana && \
-    mv /var/lib/grafana /opt/grafana/data && \
-    mv /var/log/grafana /opt/grafana/log && \
-    mv /etc/grafana /opt/grafana/etc
+    mkdir -p /srv/grafana && \
+    mv /var/lib/grafana /srv/grafana/data && \
+    mv /var/log/grafana /srv/grafana/log
 
-VOLUME ["/opt/grafana/data", "/opt/grafana/log", "/opt/grafana/etc"]
+VOLUME ["/srv/grafana"]
 
 EXPOSE 3000
 
 USER grafana
 
-ENTRYPOINT ["/usr/sbin/grafana-server", "--homepath=/usr/share/grafana", "--config=/opt/grafana/etc/grafana.ini", "cfg:default.paths.data=/opt/grafana/data", "cfg:default.paths.logs=/opt/grafana/log"]
+ENTRYPOINT ["/usr/sbin/grafana-server", "--homepath=/usr/share/grafana", "--config=/etc/grafana/grafana.ini", "cfg:default.paths.data=/srv/grafana/data", "cfg:default.paths.logs=/srv/grafana/log"]

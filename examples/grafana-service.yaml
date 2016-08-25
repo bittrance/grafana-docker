@@ -1,0 +1,10 @@
+kind: Service
+metadata:
+  name: grafana-service
+spec:
+  selector:
+    name: grafana
+  ports:
+  - port: 80
+    targetPort: http
+
